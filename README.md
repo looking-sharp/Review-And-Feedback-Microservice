@@ -118,8 +118,4 @@ Review-And-Feedback-Microservice/
 - [ ] Integration tests
 
 ## Contributing
-
-### Team Responsibilities
-- **Lev**: Main implementation (API endpoints, business logic)
-- **Thomas**: Initial setup (completed) + deployment/Docker configuration
-- **Olivia**: Database schema design, UML diagrams, Testing
+Please coordinate with team members before making major changes to shared components.
