@@ -96,8 +96,8 @@ POST /feedback
 {
   "userId": "string",
   "entityId": "string",
-  "rating": 1-5,
-  "comment": "string (optional)"
+  "rating": 5,
+  "comment": "string" 
 }
 ```
 
@@ -108,7 +108,7 @@ POST /feedback
   "feedbackId": "uuid",
   "userId": "string",
   "entityId": "string",
-  "rating": 1-5,
+  "rating": 5,
   "comment": "string"
 }
 ```
@@ -122,8 +122,8 @@ PUT /feedback/{feedbackId}
 ```json
 {
   "userId": "string",
-  "rating": 1-5 (optional),
-  "comment": "string (optional)"
+  "rating": 4,  
+  "comment": "string" 
 }
 ```
 
@@ -133,7 +133,7 @@ PUT /feedback/{feedbackId}
   "message": "Feedback updated",
   "feedbackId": "uuid",
   "changes": {
-    "rating": 1-5,
+    "rating": 4,
     "comment": "string"
   }
 }
