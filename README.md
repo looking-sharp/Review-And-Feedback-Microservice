@@ -88,7 +88,20 @@ PUT /feedback/{feedback_id}
 ```
 
 ## Database Schema
-(To be documented by Olivia)
+
+### Feedbacks Collection (MongoDB)
+
+![Database Schema](images/database-schema.png)
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| _id | ObjectId | Yes | MongoDB auto-generated ID |
+| feedbackId | String | Yes | Unique feedback identifier (UUID) |
+| userId | String | Yes | User who submitted feedback |
+| entityId | String | Yes | Entity being reviewed |
+| rating | Integer | Yes | Rating (1-5 stars) |
+| comment | Text | No | Optional feedback comment |
+| last_modified | DateTime | Yes | Last modification timestamp (UTC) |
 
 ## UML Diagrams
 (To be created by Olivia)
