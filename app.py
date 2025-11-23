@@ -165,6 +165,57 @@ def update_feedback_endpoint(feedbackId):
         "changes": {"rating": rating, "comment": comment}
     }), 200
 
+"""
+
+Get feedback (Thomas)
+
+"""
+
+def get_parameters(args) -> dict:
+    # get by ID
+    _id = args.get("id")
+    if _id:
+        return {"id": _id}
+    
+    # get by recent (default get all newest -> oldest)
+    amount = args.get("amount", -1)
+    start_at = args.get("start", 0)
+    order = args.get("order", "desc").lower()
+    
+    return {"amount": amount, "start_at": start_at, "order": order}
+
+@app.route("/get-feedback", methods=["GET"])
+def get_feedback_list():
+    # get parameters
+    params = get_parameters(request.args)
+    if "id" in params:
+        # get only review with that id:
+        log = feedback_collection.find_one({"feedbackId": params["id"]})
+        if log:
+            log.pop("_id", None)
+            return jsonify({"result": log}), 200
+        return jsonify({"error": "feedback not found"}),400
+    
+    amount = int(params["amount"])
+    start_at = int(params["start_at"])
+    order = params["order"]
+    sort_direction = -1 if order == "desc" else 1
+
+    # grab all feedback and sort by order
+    query = feedback_collection.find().sort("last_modified", sort_direction)
+
+    if start_at > 0:
+        query = query.skip(start_at)
+
+    if amount > -1:
+        query = query.limit(amount)
+
+    results = []
+    for doc in query:
+        doc.pop("_id", None)
+        results.append(doc)
+
+    return jsonify({"results": results}), 200
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", "5005"))
