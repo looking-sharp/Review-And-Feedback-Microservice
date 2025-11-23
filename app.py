@@ -58,12 +58,18 @@ def save_feedback(userId, entityId, rating, comment):
 def update_feedback_entry(feedbackId, rating, comment, last_modified):
     """
     Olivia: Replace MOCK_DB update with actual DB UPDATE logic.
+    Update feedback in MongoDB (provided fields only, refresh timestamp).
     """
     update_data = {
-        "rating": rating,
-        "comment": comment,
         "last_modified": last_modified.isoformat()
     }
+
+    if rating is not None:
+        update_data["rating"] = rating
+
+    if comment is not None:
+        update_data["comment"] = comment
+        
     result = feedback_collection.update_one(
         {"feedbackId": feedbackId},
         {"$set": update_data}
