@@ -43,11 +43,40 @@ This microservice handles customer feedback and reviews for consumed entities. I
 #### Using Docker (Recommended)
 ```bash
 # Build the Docker image
-docker build -t review-feedback-service .
+docker build -t review-and-feedback-service .
 
 # Run the container
-docker run -p 5005:5005 review-feedback-service
+docker run review-and-feedback-service
 ```
+
+#### `docker-compose.yml` Setup
+```yml
+networks:
+  mynetwork:
+    driver: bridge   #Allows you to interact with other microservices within container
+
+review-and-feedback-microservice:
+    build: ./Review-And-Feedback-Microservice
+    image: review-and-feedback-microservice
+    ports:
+      - "5005:5005"
+    environment:
+      FLASK_APP: app.py
+      FLASK_ENV: development
+    networks:
+      - mynetwork
+```
+Then if you want to call on this microservice INSIDE the container, Instead of
+```bash
+http://localhost:5005/<route>
+```
+You will have to use:
+```base
+http://review-and-feedback-microservice:5005/<route>
+```
+> [!WARNING]  
+> This won't work if you're trying to call it from outside the container. For that use localhost
+
 
 #### Local Development
 ```bash
