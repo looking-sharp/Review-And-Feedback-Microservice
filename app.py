@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from pymongo import MongoClient
 from datetime import datetime, timezone
+from dotenv import load_dotenv
 import os
 import uuid
 import json 
@@ -19,6 +20,7 @@ CORS(app, resources={
 })
 
 # MongoDB Connection (Olivia)
+load_dotenv()
 MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
 client = MongoClient(MONGO_URI)
 db = client["review_feedback_db"]
